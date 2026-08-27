@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    private static long stringSimilarity(String s) {
+        int n = s.length();
+        int[] z = new int[n];
+
+        int left = 0, right = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (i <= right) {
+                z[i] = Math.min(right - i + 1, z[i - left]);
+            }
+
+            while (i + z[i] < n &&
+                   s.charAt(z[i]) == s.charAt(i + z[i])) {
+                z[i]++;
+            }
+
+            if (i + z[i] - 1 > right) {
+                left = i;
+                right = i + z[i] - 1;
+            }
+        }
+
+        long similarity = n; // whole string matches itself
+
+        for (int value : z) {
+            similarity += value;
+        }
+
+        return similarity;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        int t = Integer.parseInt(br.readLine().trim());
+
+        StringBuilder result = new StringBuilder();
+
+        while (t-- > 0) {
+            String s = br.readLine().trim();
+            result.append(stringSimilarity(s)).append('\n');
+        }
+
+        System.out.print(result);
+    }
+}
