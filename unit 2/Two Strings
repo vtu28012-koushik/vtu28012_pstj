@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Solution {
+
+    static String twoStrings(String s1, String s2) {
+        boolean[] chars = new boolean[26];
+
+        for (char c : s1.toCharArray()) {
+            chars[c - 'a'] = true;
+        }
+
+        for (char c : s2.toCharArray()) {
+            if (chars[c - 'a']) {
+                return "YES";
+            }
+        }
+
+        return "NO";
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int q = scanner.nextInt();
+        scanner.nextLine();
+
+        while (q-- > 0) {
+            String s1 = scanner.nextLine();
+            String s2 = scanner.nextLine();
+
+            System.out.println(twoStrings(s1, s2));
+        }
+
+        scanner.close();
+    }
+}
