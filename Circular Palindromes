@@ -1,0 +1,45 @@
+import java.util.*;
+
+public class Solution {
+
+    static int longestPalindrome(String s) {
+        int n = s.length();
+        int maxLen = 1;
+
+        for (int center = 0; center < n; center++) {
+
+            // Odd length palindromes
+            int l = center, r = center;
+            while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
+                maxLen = Math.max(maxLen, r - l + 1);
+                l--;
+                r++;
+            }
+
+            // Even length palindromes
+            l = center;
+            r = center + 1;
+            while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
+                maxLen = Math.max(maxLen, r - l + 1);
+                l--;
+                r++;
+            }
+        }
+
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        String s = sc.next();
+
+        for (int rot = 0; rot < n; rot++) {
+            String rotated = s.substring(rot) + s.substring(0, rot);
+            System.out.println(longestPalindrome(rotated));
+        }
+
+        sc.close();
+    }
+}
